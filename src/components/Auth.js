@@ -1,15 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { authActions }from '../store/auth'
 import classes from './Auth.module.css'
 
+
+
 const Auth = () => {
-    return (
+
+  const authentified = useSelector((state) => state.auth.isAuthenticated);
+
+  const dispatch = useDispatch() 
+    const loginHandler = (event) => {
+      event.preventDefault()
+      dispatch(authActions.login())
+}
+return (
       <>
         <Link to="/homepage" className={classes.link}>
           Auth to Homepage
-        </Link>
+        </Link> 
         <main className={classes.auth}>
           <section>
-            <form>
+            <form onClick={loginHandler}>
               <div className={classes.control}>
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" />
@@ -18,7 +30,7 @@ const Auth = () => {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" />
               </div>
-              <button>Login</button>
+              <button>{!authentified ? 'Login' : 'In Process...'}</button>
             </form>
           </section>
         </main>
