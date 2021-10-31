@@ -1,4 +1,4 @@
-# Le Projet de Production de Flash Card est basé en technologies tel que : React-Redux, CSS avancé.
+# Ce Projet de Production de Flash Card est basé en technologies tel que : React-Redux, CSS avancé.
 
 
 
