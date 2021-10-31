@@ -1,11 +1,20 @@
-import React from 'react';
-import './App.css';
+import { Route, Switch } from "react-router";
+import Auth from "./components/Auth";
+import HeaderLogout from "./components/HeaderLogout";
+import Homepage from "./components/Homepage";
+import "./App.css";
+
+// <Route path="/" exact component={HeaderLogout} />;
 
 function App() {
   return (
-    <div className="App">
-      Hello from Aveh 
-    </div>
+    <>
+    <HeaderLogout />
+      <Switch>
+        <Route path="/" exact component={Auth} />
+        <Route path="/homepage" component={Homepage} />
+      </Switch>
+    </>
   );
 }
 

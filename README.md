@@ -1,5 +1,4 @@
-# Ce Projet de Production de Flash Card est basé en technologies tel que : React-Redux, CSS avancé.
-
+# Ce Projet de Production de FLASH CARD est basé en technologies tel que : React-Redux, CSS avancé.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
