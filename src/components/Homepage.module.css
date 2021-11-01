@@ -1,8 +1,26 @@
-.homepage{
-    
-    color: #fff;
-    font-size: 2em;
-    margin: 0 auto; 
-    text-align: center;
-    text-decoration: none;
+h3 {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+.mainbody {
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgb(113, 126, 142);
+  width: 70%;
+  float:right;
+
+}
+
+.aside{
+  float: left;
+  background-color: rgb(4, 45, 67); 
+  width: 30%; 
+color: #fff;
+
 }
