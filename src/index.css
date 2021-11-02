@@ -15,20 +15,21 @@ body {
   padding: 0;
   font-family: sans-serif;
   color: #282727;
-  background-color: #252525;
+  background-color: rgb(4, 45, 67);
+
 }
 
 button {
   padding: 0.7rem 1.5rem;
   border-radius: 6px;
-  background-color: #a31e1e;
+  background-color: rgb(4, 45, 67);
   border: 1px solid #f1670cfb;
   color: white;
 }
 
 button:hover,
 button:active {
- background-color: #d83b18;
+ background-color: #ae1012;
   border-color: #f4edf0;
 }
 code {

@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #a23c06;
+  background-color: #177212;
   color: white;
   padding: 0 10%;
 }
@@ -29,13 +29,13 @@
 
 .header a:hover,
 .header a:active {
-  color: #b8c11e;
+  color: #cd6810;
 }
 
 .header button {
   font-size: 1.25rem;
-  background-color: #a31e1e;
-  border: 1px solid #f1670cfb;
+  background-color: rgb(4, 45, 67);
+  border: 1px solid #f10c0cfb;
   padding: 0.5rem 1.5rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   color: #ffffff;
@@ -43,7 +43,7 @@
 
 .header button:hover,
 .header button:active {
-  background-color: #d83b18;
+  background-color: #ae1012;
   border-color: #e6a5c3;
 }
 

@@ -1,0 +1,119 @@
+h3 {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+h5 {
+  color: rgb(28, 174, 28);
+}
+
+.link {
+  float: left;
+  color: rgb(238, 232, 232);
+  margin-left: 0.5em;
+   text-decoration: none;
+}
+
+.homepage {
+  margin-top: 0.2em;
+}
+
+.mainbody {
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgb(35, 105, 189);
+  width: 70%;
+  height: 100vh;
+  float: right;
+}
+
+button {
+  margin: 1em;
+  color: rgb(28, 174, 28);
+  border-radius: 2em;
+  background-color: rgb(4, 45, 67);
+}
+
+button .buttonIcon {
+  margin-right: 1.5em;
+}
+
+.aside {
+  float: left;
+  background-color: rgb(4, 45, 67);
+  width: 30%;
+  color: #fff;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.fillCarteUp {
+  color: rgb(4, 45, 67);
+  transform: translate(25%, -20%);
+  z-index: 1;
+  position: absolute;
+  left: 25em;
+}
+
+.headAside {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 1.6em 1em 1em;
+  margin-bottom: 1em;
+}
+
+.headAside h3 {
+  transform: translateY(50%);
+}
+
+.ulIcons {
+  list-style-type: none;
+}
+
+.iconPlus {
+  color: #fff;
+  font-size: 3.3em;
+  transform: translate(20%, 60%);
+}
+.iconSquare {
+  color: #fff;
+  font-size: 2.9em;
+  transform: translate(30%, 60%);
+}
+
+.circleIcon {
+  display: inline-block;
+  background-color: rgb(28, 174, 28);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.iconsArticles {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.5em 10em 1em 0em;
+  font-size: 1.5em;
+}
+
+.iconPosition {
+  vertical-align: middle;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.langWrapper {
+  background-color: rgb(3, 29, 43);
+  border: 1px solid rgb(4, 45, 67);
+  width: 90%;
+  height: 30vh;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

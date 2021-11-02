@@ -27,7 +27,7 @@ const HeaderLogout = () => {
           </ul>
         </nav>
       ) : (
-        <div className={classes.flashcardHeader}>FLASH CARD UI</div>
+        <div className={classes.flashcardHeader}>UI FLASH CARD</div>
       )}
     </header>
   );
