@@ -5,7 +5,16 @@ import { FiLogIn } from "react-icons/fi";
 import { BsEmojiSmile, BsEmojiFrown } from "react-icons/bs";
 import classes from "./Homepage.module.css";
 
+
+
 const Homepage = () => {
+
+const handlerCategories = () => {
+
+
+}
+
+
   return (
     <>
       <div className={classes.homepage}>
@@ -30,8 +39,8 @@ const Homepage = () => {
           <AiFillCaretUp className={classes.fillCarteUp} />
           <div className={classes.headAside}>
             <h3>Flashcarrds</h3>
-            <span>
-              <AiFillPlusCircle className={classes.iconPlus} />
+            <span onClick={handlerCategories}>
+              <AiFillPlusCircle  className={classes.iconPlus} />
             </span>
           </div>
           <article className={classes.langWrapper}>
