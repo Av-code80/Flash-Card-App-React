@@ -1,13 +1,26 @@
 import { Route, Switch } from "react-router";
-import Auth from "./components/Auth";
-import HeaderLogout from "./components/HeaderLogout";
-import Homepage from "./components/Homepage";
-import Details from "./components/Details";
+import { useEffect } from 'react'
+import Auth from "./components/Auth/Auth";
+import HeaderLogout from "./components/Header/HeaderLogout";
+import Homepage from "./components/Homepage/Homepage";
+import Details from "./components/Details/Details";
 import "./App.css";
 
 // <Route path="/" exact component={HeaderLogout} />;
 
+
+
 function App() {
+
+  useEffect(() => {
+    if (!localStorage.getItem("categories")) {
+
+        localStorage.setItem("categories", "[]");
+    }
+  
+  }, []);
+
+
   return (
     <>
       <HeaderLogout />

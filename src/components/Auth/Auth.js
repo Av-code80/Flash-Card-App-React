@@ -1,21 +1,23 @@
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { authActions }from '../store/auth'
+import { login, selectAuth } from './authSlice'
 import classes from './Auth.module.css'
 
 
 const Auth = () => {
 
-  const authentified = useSelector((state) => state.auth.isAuthenticated);
+  const {isAuthenticated} = useSelector(selectAuth);
 
   const dispatch = useDispatch() 
     const loginHandler = (event) => {
       event.preventDefault()
-      dispatch(authActions.login())
+      dispatch(login())
 }
 return (
   <>
-    <Link to="/homepage" className={classes.link}>Auth to Homepage</Link>
+    <Link to="/homepage" className={classes.link}>
+      Auth to Homepage
+    </Link>
     <main className={classes.auth}>
       <section>
         <form onClick={loginHandler}>
@@ -27,7 +29,7 @@ return (
             <label htmlFor="password">Password</label>
             <input type="password" id="password" />
           </div>
-          <button>{!authentified ? "Login" : "In Process..."}</button>
+          <button>{!isAuthenticated ? "Login" : "In Process..."}</button>
         </form>
       </section>
     </main>
