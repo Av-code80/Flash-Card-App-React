@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, selectAuth } from './authSlice'
+import { login, selectAuth } from '../../redux/slices/authSlice'
 import classes from './Auth.module.css'
 
 

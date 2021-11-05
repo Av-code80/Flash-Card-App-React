@@ -3,51 +3,34 @@ import { AiFillPlusCircle, AiFillCaretUp } from "react-icons/ai";
 import { GoTrashcan } from "react-icons/go";
 import { FiLogIn } from "react-icons/fi";
 import { BsEmojiSmile, BsEmojiFrown } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { homepageSliceActions } from "./homepageSlice";
+//import { useDispatch } from "react-redux";
+//import { homepageSliceActions } from "./homepageSlice";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addCategoryAsync } from "../../redux/slices/categoriesSlice";
 
 import classes from "./Homepage.module.css";
 
 const Homepage = () => {
   const [categoryList, setCategoryList] = useState([]);
-  const [editName, setEditName] = useState(false);
-  const [currentInput, setCurrentInput] = useState();
+  const [currentInput, setCurrentInput] = useState(); //? 0-1
 
-
-    const handlerChangeName = (index) => {
-console.log(index, currentInput);
-      setEditName((!editName));
-
-      setCurrentInput(index)
-
-    };
-
-    const renderEditItem = (index, name) => {
-      console.log("*", editName, currentInput, index, currentInput == index);
-  if(currentInput) {
-
-if (editName && currentInput == index) {
-  return <h2 onClick={() => handlerChangeName(index)}>{name}</h2>;
-}
-  } else {
-    
-      return <h2 onClick={() => handlerChangeName(index)}>{name}</h2>;
-
-  }
-      
-    }
-
+  const handlerChangeName = (index) => {
+    setCurrentInput(index);
+  };
 
   useEffect(() => {
+    //for first time array apear
     const res = JSON.parse(localStorage.getItem("categories"));
     setCategoryList(res);
+    console.log(currentInput);
   }, []);
 
   const dispatch = useDispatch();
+
   const handlerAddCategories = () => {
     const categories = JSON.parse(localStorage.getItem("categories")); // for turning in array
-
+    console.log(categories);
     const initObj = {
       name: "Change name",
       description: "Change description",
@@ -55,10 +38,41 @@ if (editName && currentInput == index) {
     categories.push(initObj);
     localStorage.setItem("categories", JSON.stringify(categories));
 
-    setCategoryList(categories)
+    setCategoryList(categories);
 
-    // dispatch(homepageSliceActions.deserializedObj);
+    dispatch(addCategoryAsync(categories));
   };
+
+  const handlerSaveName = (event) => {
+    if (event.key === "Enter") {
+      const categories = categoryList; // 1. take a copy from categoryList
+      categories[currentInput]["name"] = event.target.value;  // 2. give data
+        setCategoryList(categories)  // 3. replace all in categoryList by edited value
+        setCurrentInput(-1)       // for disable edit mode
+
+      localStorage.setItem("categories", JSON.stringify(categories)) // 4. set data in local
+      //       const categories = [
+      //       ...categoryList,
+      //         {name: event.target.value, description: "Change Description"}
+      //       ];
+      // setCategoryList(categories)
+      // setCategoryList(
+      //   (list) => (list[currentInput]["name"] = event.target.value)
+      // );
+    }
+  };
+
+    const deletCategory = (deletIndex) => {
+      
+      const list = categoryList.filter((item, index) => {
+
+            return (deletIndex !== index)  
+      } )
+        setCategoryList(list)
+
+       localStorage.setItem("categories", JSON.stringify(list))
+    }
+        
 
   return (
     <>
@@ -89,20 +103,21 @@ if (editName && currentInput == index) {
             </span>
           </div>
 
-          {categoryList.map(({name}, index) => {
+          {categoryList.map(({ name }, index) => {
             return (
               <article key={index} className={classes.langWrapper}>
-                <h1>
-                  {currentInput}-{index}
-                </h1>
-                {renderEditItem(index, name)}
-                <div>
-                  <input type="text" />
-                </div>
+                {currentInput === index ? (
+                  <div>
+                    <input type="text" onKeyPress={handlerSaveName} />
+                  </div>
+                ) : (
+                  <h2 onClick={() => handlerChangeName(index)}>{name}</h2>
+                )}
+
                 <h5>Add cards</h5>
                 <div className={classes.iconsArticles}>
                   <span>
-                    <GoTrashcan />
+                    <GoTrashcan onClick={() => deletCategory(index)}/>
                   </span>
                   <span>
                     <FiLogIn />
@@ -111,19 +126,6 @@ if (editName && currentInput == index) {
               </article>
             );
           })}
-
-          {/* <article className={classes.devWrapper}>
-            <h2>JavaScript Methods</h2>
-            <h5>Add cards</h5>
-            <div className={classes.iconsArticles}>
-              <span>
-                <GoTrashcan />
-              </span>
-              <span>
-                <FiLogIn />
-              </span>
-            </div>
-          </article> */}
         </section>
       </div>
     </>
