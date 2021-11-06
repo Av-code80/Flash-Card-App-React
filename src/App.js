@@ -6,8 +6,6 @@ import Homepage from "./components/Homepage/Homepage";
 import Details from "./components/Details/Details";
 import "./App.css";
 
-// <Route path="/" exact component={HeaderLogout} />;
-
 
 
 function App() {
@@ -15,9 +13,8 @@ function App() {
   useEffect(() => {
     if (!localStorage.getItem("categories")) {
 
-        localStorage.setItem("categories", "[]");
-    }
-  
+     localStorage.setItem("categories", "[]");
+    } 
   }, []);
 
 
