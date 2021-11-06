@@ -7,7 +7,6 @@ import Details from "./components/Details/Details";
 import "./App.css";
 
 
-
 function App() {
 
   useEffect(() => {
