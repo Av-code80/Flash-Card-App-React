@@ -3,9 +3,11 @@ import { AiFillPlusCircle, AiFillCaretUp } from "react-icons/ai";
 import { GoTrashcan } from "react-icons/go";
 import { FiLogIn } from "react-icons/fi";
 import { BsEmojiSmile, BsEmojiFrown } from "react-icons/bs";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addCategoryAsync } from "../../redux/slices/categoriesSlice";
+import { v4 as uuidv4 } from "uuid";
+
 //import { useDispatch } from "react-redux";
 //import { homepageSliceActions } from "./homepageSlice";
 
@@ -14,13 +16,15 @@ import classes from "./Homepage.module.css";
 const Homepage = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [currentInput, setCurrentInput] = useState(-1);
-  const nameInputRef = useRef();
+  const [enteredName, setEnteredName] = useState(false);
+  // const nameInputRef = useRef();
 
   const handlerChangeName = (index) => {
     setCurrentInput(index);
-     
   };
- 
+
+  const nameInputChangeHandler = (event) => setEnteredName(event.target.value);
+
   useEffect(() => {
     // for first time array apear
     const res = JSON.parse(localStorage.getItem("categories"));
@@ -31,29 +35,42 @@ const Homepage = () => {
 
   const handlerAddCategories = () => {
     const categories = JSON.parse(localStorage.getItem("categories"));
-    console.log(categories);
+
     const initObj = {
       name: "Change Name",
       description: "Word meaning",
-      id: 989,
+      id: uuidv4(),
+      cards: [],
     };
     categories.push(initObj);
+
     localStorage.setItem("categories", JSON.stringify(categories));
+    console.log(categories, localStorage.getItem("categories"));
     setCategoryList(categories);
     dispatch(addCategoryAsync(categories));
   };
 
   const handlerSaveName = (event) => {
-    if (event.key === "Enter") { 
-      const categories = categoryList; // 1. take a copy from categoryList
-      categories[currentInput]["name"] = event.target.value; // 2. give data
-      setCategoryList(categories); // 3. replace all in categoryList by edited value
-      setCurrentInput(-1); // for disable edit mode
+    if (event.key === "Enter") {
+      const categories = [...categoryList]; // 1. take a copy from categoryList
+      //console.log(categories.length, categories);
+      if (categories && categories.length) {
+        console.log(Object.getOwnPropertyDescriptors(categories));
+        let category = {...categories[currentInput], name: event.target.value}; // 2. give data by creating a new array by spread op...
+        categories[currentInput] = category
+        setCategoryList(categories); // 3. replace all in categoryList by edited value
+        setCurrentInput(-1); // for disable edit mode
+        event.preventDefault(enteredName);
+        //console.log(enteredName);
+        if (enteredName.trim() === "") {
+          return;
+        }
+        localStorage.setItem("categories", JSON.stringify(categories)); // 4. set data in local
+      }
 
- const enteredValue = nameInputRef.current.value;
- console.log(enteredValue);
- 
-      localStorage.setItem("categories", JSON.stringify(categories)); // 4. set data in local
+      //  const enteredValue = nameInputRef.current.value;
+      //  console.log(enteredValue);
+      //         setEnteredName("")
     } else return;
   };
 
@@ -64,7 +81,7 @@ const Homepage = () => {
     setCategoryList(list);
 
     localStorage.setItem("categories", JSON.stringify(list));
-  };         
+  };
   return (
     <>
       <div className={classes.homepage}>
@@ -93,36 +110,39 @@ const Homepage = () => {
               <AiFillPlusCircle className={classes.iconPlus} />
             </span>
           </div>
-          {categoryList.map(({ id, name }, index) => {
-            return (
-              <article key={index} className={classes.langWrapper}>
-                {currentInput === index ? (
-                  <div>
-                    <input
-                      className={classes.input}
-                      type="text"
-                      onKeyPress={handlerSaveName}
-                      ref={nameInputRef}
-                      placeholder={"Enter a category name"}
-                    />
-                  </div>
-                ) : (
-                  <h2 onClick={() => handlerChangeName(index)}>{name}</h2>
-                )}
-                <h5>Add cards</h5>
-                <div className={classes.iconsArticles}>
-                  <span>
-                    <GoTrashcan onClick={() => handlerDeletCategory(index)} />
-                  </span>
-                  <Link to={`/details/${id}`} className={classes.link}>
-                    <span key={id}>
-                      <FiLogIn />
+          {categoryList &&
+            categoryList.map(({ id, name }, index) => {
+              return (
+                <article key={index} className={classes.langWrapper}>
+                  {currentInput === index ? (
+                    <div>
+                      <input
+                        className={classes.input}
+                        type="text"
+                        onKeyPress={handlerSaveName}
+                        // ref={nameInputRef}
+                        onChange={nameInputChangeHandler}
+                        // value={enteredName}
+                        placeholder={"Enter a category name"}
+                      />
+                    </div>
+                  ) : (
+                    <h2 onClick={() => handlerChangeName(index)}>{name}</h2>
+                  )}
+                  <h5>Add cards</h5>
+                  <div className={classes.iconsArticles}>
+                    <span>
+                      <GoTrashcan onClick={() => handlerDeletCategory(index)} />
                     </span>
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
+                    <Link to={`/details/${id}`} className={classes.link}>
+                      <span key={id}>
+                        <FiLogIn />
+                      </span>
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
         </section>
       </div>
     </>

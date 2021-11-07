@@ -27,7 +27,7 @@ h5 {
   text-align: center;
   background-color: rgb(35, 105, 189);
   width: 70%;
-  height: 100vh;
+  height: 90vh;
   float: right;
 }
 
@@ -47,7 +47,7 @@ button .buttonIcon {
   background-color: rgb(4, 45, 67);
   width: 30%;
   color: #fff;
-  height: 100vh;
+  height: 90vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -91,16 +91,6 @@ button .buttonIcon {
   font-size: 1.5em;
 }
 
-.devWrapper {
-  background-color: rgb(3, 29, 43);
-  border: 1px solid rgb(4, 45, 67);
-  width: 90%;
-  height: 30vh;
-  margin-top: 2em;
-  text-align: center;
-  margin: 0 auto;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
 
 .input{
   margin-top: 2em;

@@ -4,6 +4,7 @@ import Auth from "./components/Auth/Auth";
 import HeaderLogout from "./components/Header/HeaderLogout";
 import Homepage from "./components/Homepage/Homepage";
 import Details from "./components/Details/Details";
+import Footer from '../src/components/footer/Footer'
 import "./App.css";
 
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/homepage" component={Homepage} />
         <Route path="/details/:id" component={Details} />
       </Switch>
+      <Footer />
     </>
   );
 }
