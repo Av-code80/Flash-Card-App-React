@@ -1,21 +1,14 @@
 import { Link } from "react-router-dom";
 import { AiFillPlusCircle, AiFillCaretUp } from "react-icons/ai";
 import { GoTrashcan } from "react-icons/go";
-import { TiAttachment } from "react-icons/ti";
+import { FiEdit } from "react-icons/fi";
 import { GiRapidshareArrow } from "react-icons/gi";
 import { IoCaretBackOutline, IoCaretForwardOutline } from "react-icons/io5";
-import {
-  BsEmojiSmile,
-  BsEmojiFrown,
-  BsFillStopCircleFill,
-} from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { BsEmojiSmile, BsEmojiFrown, BsFillStopCircleFill} from "react-icons/bs";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
-
-
+import { useEffect, useState } from "react";
 import classes from "./Details.module.css";
-import { current } from "immer";
 
 
 const Details = (props) => {
@@ -25,22 +18,21 @@ const Details = (props) => {
   const [questionInput, setQuestionInput] = useState();
   const [answerInput, setAnswerInput] = useState();
 
-  const id = props.match.params.id;
+  const id = props.match.params.id; 
 
-  useEffect(() => {
-    //console.log(categoriesDetails[id]);
+  useEffect(() => {       //console.log(categoriesDetails[id]);
     const categoryDetails = dataStorageToObject();
 
     setCategory(categoryDetails[id]);
-    // console.log(categoriesDetails);
+    // console.log(categoryDetails);
     // const category = _.mapKeys(categoriesDetails, "id"); // take an array of obj and defin by which key turning an object
     // console.log(category);
     // //console.log(categoriesDetails);
-  }, []);
+  }, [id]);
 
   const handlerAddCard = () => {
     let categoryTemp = { ...category };
-    let cards = categoryTemp.cards;
+    let cards = categoryTemp.cards; //?
     console.log(cards);
 
     const initCard = {
@@ -97,6 +89,14 @@ const handlerOnSubmitCard = (event) => {
     "categories",JSON.stringify(Object.values(categories))
   );
 }
+
+const handlerRemoveCard = (idRemover) => {
+  const list = category.cards.filter((item, id) => {
+    return idRemover !== id;
+  });
+  setCategory(list);
+  localStorage.setItem("categories", JSON.stringify(Object.values(list)));
+};
   //console.log(Object.hasOwnProperty(category, "name"));
   //console.log(category);
   if (!category.hasOwnProperty("name")) {
@@ -117,21 +117,27 @@ const handlerOnSubmitCard = (event) => {
             <div>
               <h1>Edit card</h1>
               <form onSubmit={handlerOnSubmitCard}>
-               <div>
-                 <label htmlFor="question">question:</label>
-                 <input value={questionInput} type="text" id="question"
-                 onChange={(event) => setQuestionInput(event.target.value)}
-                 />
-               </div>
-               <div>
-                 <label htmlFor="answer">answer</label>
-                 <input value={answerInput} type="text" id="answer" 
-                 onChange={(event) => setAnswerInput(event.target.value)}/>
-               </div>
-               <div>
-                 <button >Submit</button>
-               </div>
-
+                <div className={classes.control}>
+                  <label htmlFor="question">question</label>
+                  <input
+                    value={questionInput}
+                    type="text"
+                    id="question"
+                    onChange={(event) => setQuestionInput(event.target.value)}
+                  />
+                </div>
+                <div className={classes.control}>
+                  <label htmlFor="answer">answer</label>
+                  <input
+                    value={answerInput}
+                    type="text"
+                    id="answer"
+                    onChange={(event) => setAnswerInput(event.target.value)}
+                  />
+                </div>
+                <div>
+                  <button>Submit</button>
+                </div>
               </form>
             </div>
           ) : (
@@ -174,9 +180,9 @@ const handlerOnSubmitCard = (event) => {
                 />
               </li>
             </ul>
-          </div>
-
-          {category.cards.map(({ id, question, answer }) => {
+          </div>    
+          {category &&
+          category.cards.map(({ id, question, answer }) => {
             return (
               <article
                 onClick={() => handlerShowCard(id)}
@@ -184,12 +190,13 @@ const handlerOnSubmitCard = (event) => {
                 className={classes.langWrapper}
               >
                 <div className={classes.iconsArticles}>
-                  <span className={classes.circleIcon}>
+                  <span onClick={() => handlerRemoveCard(id)} className={classes.circleIcon}>
                     <GoTrashcan className={classes.iconPosition} />
                   </span>
                   <span className={classes.circleIcon}>
-                    <TiAttachment
-                      onClick={(event) => handlerEditCard(event, id, question, answer)}
+                    <FiEdit onClick={(event) =>
+                    handlerEditCard(event, id, question, answer)
+                      }
                       className={classes.iconPosition}
                     />
                   </span>

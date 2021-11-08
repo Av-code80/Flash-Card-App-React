@@ -53,15 +53,14 @@ const Homepage = () => {
   const handlerSaveName = (event) => {
     if (event.key === "Enter") {
       const categories = [...categoryList]; // 1. take a copy from categoryList
-      //console.log(categories.length, categories);
-      if (categories && categories.length) {
+      if (categories && categories.length) { //console.log(categories.length, categories);
         console.log(Object.getOwnPropertyDescriptors(categories));
-        let category = {...categories[currentInput], name: event.target.value}; // 2. give data by creating a new array by spread op...
-        categories[currentInput] = category
-        setCategoryList(categories); // 3. replace all in categoryList by edited value
+        let category = {...categories[currentInput], name: event.target.value,
+      }; // 2. give data by creating a new array by spread op...
+      categories[currentInput] = category;
+      setCategoryList(categories); // 3. replace all in categoryList by edited value
         setCurrentInput(-1); // for disable edit mode
-        event.preventDefault(enteredName);
-        //console.log(enteredName);
+        event.preventDefault(enteredName);//console.log(enteredName);
         if (enteredName.trim() === "") {
           return;
         }

@@ -117,3 +117,23 @@ button .buttonIcon {
   margin-bottom: 1em;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  display: block;
+  color: #e6dede;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  display: block;
+  width: 20rem;
+  margin: auto;
+  border-radius: 4px;
+  padding: 0.25rem;
+  border: 1px solid rgb(157, 152, 152);
+}
