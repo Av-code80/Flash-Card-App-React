@@ -90,7 +90,7 @@ const Homepage = () => {
           </Link>
           <h1>Practice Time !</h1>
           <h3>English words</h3>
-          <span>1/2</span>
+          <span></span>
           <article>
             <div className={classes.slide}></div>
             <button>
