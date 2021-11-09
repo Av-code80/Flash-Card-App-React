@@ -17,23 +17,33 @@ const Details = (props) => {
   const [currentCardID, setCurrentCardID] = useState(-1);
   const [questionInput, setQuestionInput] = useState();
   const [answerInput, setAnswerInput] = useState();
+  const [currentCard, setCurrentCard] = useState();
 
   const id = props.match.params.id; 
 
-  useEffect(() => {       //console.log(categoriesDetails[id]);
-    const categoryDetails = dataStorageToObject();
+ const dataStorageToObject = () => {
+   let categoriesDetails = JSON.parse(localStorage.getItem("categories"));
+   return _.mapKeys(categoriesDetails, "id"); // take an array of obj and defin by which key turning an object
+ };
+
+  useEffect(() => {  // console.log(categoriesDetails[id]);
+    const categoryDetails = dataStorageToObject(); //?
 
     setCategory(categoryDetails[id]);
-    // console.log(categoryDetails);
-    // const category = _.mapKeys(categoriesDetails, "id"); // take an array of obj and defin by which key turning an object
-    // console.log(category);
-    // //console.log(categoriesDetails);
   }, [id]);
+
+
+  useEffect(() => {
+    const card = _.mapKeys(category["cards"], "id")[currentCardID] // defin current cart Id
+    console.log(card, "***");
+      setCurrentCard(card)   // save in our state -- we have data of current cart
+  }, [category, currentCardID])
+
 
   const handlerAddCard = () => {
     let categoryTemp = { ...category };
     let cards = categoryTemp.cards; //?
-    console.log(cards);
+    //console.log(cards);
 
     const initCard = {
       id: uuidv4(),
@@ -41,19 +51,14 @@ const Details = (props) => {
       answer: "",
     };
     cards.push(initCard);
-    categoryTemp.cards = cards;
+    categoryTemp.cards = cards; //?
     setCategory(categoryTemp);
 
-    const data = dataStorageToObject();
-    data[id] = categoryTemp
-   localStorage.setItem("categories", JSON.stringify(Object.values(data)))
-   //console.log(Object.values(data));
+    const data = dataStorageToObject(); //?
+    data[id] = categoryTemp;             //?
+    localStorage.setItem("categories", JSON.stringify(Object.values(data))); //?
   };
-  const dataStorageToObject = () => {
-   let categoriesDetails = JSON.parse(localStorage.getItem("categories"));
-    return _.mapKeys(categoriesDetails, "id");
-
-  };
+ 
 
 const handlerEditCard = (event, currentId, currentQuestion, currentAnswer) => {
   event.stopPropagation()
@@ -61,7 +66,7 @@ const handlerEditCard = (event, currentId, currentQuestion, currentAnswer) => {
   setCurrentCardID(currentId)
   setQuestionInput(currentQuestion)
   setAnswerInput(currentAnswer)
-  
+  console.log(currentId, currentAnswer, currentQuestion);
 }
 
 const handlerShowCard = (showId) => {
@@ -71,37 +76,36 @@ const handlerShowCard = (showId) => {
 
 const handlerOnSubmitCard = (event) => {
   event.preventDefault();
-  const categoryDetails = { ...dataStorageToObject() };
-  let cards = [...categoryDetails[id]["cards"]];
+  const categories = { ...dataStorageToObject() };
+  let cards = [...categories[id]["cards"]];
   cards = _.mapKeys(cards, "id");
-  let card = cards[currentCardID];
-  card["question"] = questionInput;
-  card["answer"] = answerInput;
-  cards[currentCardID] = card;
-  categoryDetails[id]["cards"] = cards;
+  cards[currentCardID]["question"] = questionInput
+  cards[currentCardID]["answer"] = answerInput;
+  categories[id]["cards"] = Object.values(cards);
 
-  console.log(JSON.stringify(Object.values(categoryDetails))); // delet ids and return array, values in an array
-  let categories = JSON.parse(localStorage.getItem("categories"));
-  categories = _.mapKeys(categories, "id");
-  categories[id] = Object.values(categoryDetails);
-
-  localStorage.setItem(
-    "categories",JSON.stringify(Object.values(categories))
-  );
+  localStorage.setItem("categories",JSON.stringify(Object.values(categories)));
+  setCategory(categories[id]);
+  handlerShowCard(currentCardID)
 }
 
-const handlerRemoveCard = (idRemover) => {
-  const list = category.cards.filter((item, id) => {
-    return idRemover !== id;
-  });
-  setCategory(list);
-  localStorage.setItem("categories", JSON.stringify(Object.values(list)));
-};
-  //console.log(Object.hasOwnProperty(category, "name"));
-  //console.log(category);
+const handlerRemoveCard = (event, currentId) => {
+  event.stopPropagation()
+  setEditCardStatus(false)
+  setCurrentCardID(currentId)
+  const categories = dataStorageToObject() // it returnes an object
+  let cards = _.mapKeys(categories[id]["cards"], "id")
+  cards = _.omit(cards, [currentId])
+  categories[id]["cards"] = Object.values(cards) // turn into array again for saving
+  localStorage.setItem("categories", JSON.stringify(Object.values(categories)))
+  setCategory(categories[id])
+  setCurrentCardID(-1)  
+ };
+  console.log(Object.hasOwnProperty(category, "name")); // writble
+
   if (!category.hasOwnProperty("name")) {
-    return <div>Loading...</div>;
+    return <div className={classes.categoryHasOwnProperty}>Loading...</div>;
   }
+
 
   return (
     <>
@@ -112,7 +116,7 @@ const handlerRemoveCard = (idRemover) => {
           </Link>
 
           {currentCardID == -1 ? (
-            <div>Select a card</div>
+            <div className={classes.cardSelection}>Select a Card from sidebar</div>
           ) : editCardStatus == true ? (
             <div>
               <h1>Edit card</h1>
@@ -140,15 +144,22 @@ const handlerRemoveCard = (idRemover) => {
                 </div>
               </form>
             </div>
-          ) : (
+          ) : currentCard && (
             <div>
               <h1>Practice Time !</h1>
-
               <h3>{category.name}</h3>
 
               <span>1/2</span>
               <article>
                 <div className={classes.slide}>
+                  
+                  <div>
+                    {currentCard.question}
+                  </div>
+                  <div>
+                    {currentCard.answer}
+                  </div>
+
                   <IoCaretBackOutline />
                   <GiRapidshareArrow />
                   <IoCaretForwardOutline />
@@ -181,7 +192,7 @@ const handlerRemoveCard = (idRemover) => {
               </li>
             </ul>
           </div>    
-          {category &&
+          {
           category.cards.map(({ id, question, answer }) => {
             return (
               <article
@@ -190,7 +201,8 @@ const handlerRemoveCard = (idRemover) => {
                 className={classes.langWrapper}
               >
                 <div className={classes.iconsArticles}>
-                  <span onClick={() => handlerRemoveCard(id)} className={classes.circleIcon}>
+                  <span  className={classes.circleIcon}
+                  onClick={(event) => handlerRemoveCard(event,id)}>
                     <GoTrashcan className={classes.iconPosition} />
                   </span>
                   <span className={classes.circleIcon}>
@@ -199,6 +211,7 @@ const handlerRemoveCard = (idRemover) => {
                       }
                       className={classes.iconPosition}
                     />
+                   
                   </span>
                 </div>
                 <h5>{question}</h5>
