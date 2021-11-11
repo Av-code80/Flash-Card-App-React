@@ -141,7 +141,7 @@ button .buttonIcon {
 }
 
 .slideBack{
-display: inline-block;
+display: block;
 float: left;
 transform: translate(-120%, 150%);
 font-size: 1.4em;
@@ -150,7 +150,7 @@ color: rgba(185, 213, 230, 0.948);
 }
 
 .slideNext{
-display: inline-block;
+display: block;
 float: right;
 transform: translate(235%, 150%);
 font-size: 1.4em;

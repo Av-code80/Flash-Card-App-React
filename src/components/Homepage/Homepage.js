@@ -26,10 +26,13 @@ const Homepage = () => {
   const nameInputChangeHandler = (event) => setEnteredName(event.target.value);
 
   useEffect(() => {
+   
     // for first time array apear
     const res = JSON.parse(localStorage.getItem("categories"));
     setCategoryList(res);
+   
   }, []);
+
 
   const dispatch = useDispatch();
 
@@ -44,7 +47,7 @@ const Homepage = () => {
     };
     categories.push(initObj);
 
-    localStorage.setItem("categories", JSON.stringify(categories));
+    localStorage.setItem("categories", JSON.stringify(Object.values(categories)));
     console.log(categories, localStorage.getItem("categories"));
     setCategoryList(categories);
     dispatch(addCategoryAsync(categories));
@@ -53,18 +56,21 @@ const Homepage = () => {
   const handlerSaveName = (event) => {
     if (event.key === "Enter") {
       const categories = [...categoryList]; // 1. take a copy from categoryList
-      if (categories && categories.length) { //console.log(categories.length, categories);
+      if (categories && categories.length) {
+        //console.log(categories.length, categories);
         console.log(Object.getOwnPropertyDescriptors(categories));
-        let category = {...categories[currentInput], name: event.target.value,
-      }; // 2. give data by creating a new array by spread op...
-      categories[currentInput] = category;
-      setCategoryList(categories); // 3. replace all in categoryList by edited value
+        let category = {
+          ...categories[currentInput],
+          name: event.target.value,
+        }; // 2. give data by creating a new array by spread op...
+        categories[currentInput] = category;
+        setCategoryList(categories); // 3. replace all in categoryList by edited value
         setCurrentInput(-1); // for disable edit mode
-        event.preventDefault(enteredName);//console.log(enteredName);
+        event.preventDefault(enteredName); //console.log(enteredName);
         if (enteredName.trim() === "") {
           return;
         }
-        localStorage.setItem("categories", JSON.stringify(categories)); // 4. set data in local
+        localStorage.setItem("categories", JSON.stringify(Object.values(categories))); // 4. set data in local
       }
 
       //  const enteredValue = nameInputRef.current.value;
@@ -79,8 +85,9 @@ const Homepage = () => {
     });
     setCategoryList(list);
 
-    localStorage.setItem("categories", JSON.stringify(list));
+    localStorage.setItem("categories", JSON.stringify(Object.values(list)));
   };
+ //if (!categoryList){return <div>Loading...</div>}
   return (
     <>
       <div className={classes.homepage}>
