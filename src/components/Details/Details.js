@@ -20,7 +20,7 @@ const Details = (props) => {
   const [currentCardID, setCurrentCardID] = useState(-1);
   const [questionInput, setQuestionInput] = useState();
   const [answerInput, setAnswerInput] = useState();
-  //const [currentCard, setCurrentCard] = useState();
+  const [currentCard, setCurrentCard] = useState();
 
   const id = props.match.params.id;
 
@@ -37,7 +37,7 @@ const Details = (props) => {
   const handlerAddCard = () => {
     let categoryTemp = { ...category };
     let cards = categoryTemp.cards;
-    console.log(cards);
+   // console.log(cards);
 
     const initCard = {
       id: uuidv4(),
@@ -53,30 +53,29 @@ const Details = (props) => {
     localStorage.setItem("categories", JSON.stringify(Object.values(data)));
   };
 
-  const handlerEditCard = (
-    event,
-    currentID,
-    currentAnswer,
-    currentQuestion
-  ) => {
-    event.stopPropagation();
-    setEditCardStatus(true);
-    setCurrentCardID(currentID);
-    setAnswerInput(currentAnswer);
-    setQuestionInput(currentQuestion);
-    console.log(currentCardID, currentQuestion, currentAnswer);
-  };
+    const handlerEditCard = (event, currentId, currentQuestion, currentAnswer) => {
+      event.stopPropagation();
+      setCurrentCardID(currentId);
+      setEditCardStatus(true);
+      setQuestionInput(currentQuestion);
+      setAnswerInput(currentAnswer);
+     console.log(currentId, currentAnswer, currentQuestion);
+    }
 
   const handlerShowCard = (showId) => {
     setCurrentCardID(showId);
     setEditCardStatus(false);
   };
 
-  // useEffect(() => {
-  //   const card = _.mapKeys(category["cards"], "id")[currentCardID]; // defin current cart Id
-  //   console.log(card, "***");
-  //   setCurrentCard(card); // save in our state -- we have data of current cart
-  // }, [category, currentCardID]);
+      useEffect(() => {
+        const card = _.mapKeys(category["cards"], "id")[currentCardID]
+        setCurrentCard(card)
+      }, [category, currentCardID])
+
+      const handlerOnSubmitCard = (event) => {
+        console.log("submit");
+        event.preventDefault()
+      }
 
     // const handlerOnSubmitCard = (event) => {
     //   event.preventDefault();
@@ -114,7 +113,7 @@ const Details = (props) => {
           ) : editCardStatus === true ? (
             <div>
               <h1>Edit card</h1>
-              <form >
+              <form onSubmit={handlerOnSubmitCard} >
                 <div className={classes.control}>
                   <label htmlFor="question">question</label>
                   <input
@@ -139,18 +138,17 @@ const Details = (props) => {
               </form>
             </div>
           ) : (
+            currentCard && (
             <div>
               <h1>Practice Time !</h1>
               <h3>hh</h3>
-              <span>1</span>
-
               <article>
                 <div className={classes.slide}>
                   <div className={classes.slideScript}>
-                   
+                   {`Q: ${currentCard.question}`}
                   </div>
-                  <div className={classes.slideScript}>
-                 
+                  <div className={classes.slideScript}>  
+                  {`A: ${currentCard.answer}`}               
                   </div>
                   <div>
                     <span className={classes.slideArrow}>
@@ -170,12 +168,11 @@ const Details = (props) => {
                   <BsEmojiSmile className={classes.buttonIcon} /> I know it
                 </button>
                 <button>
-                  <BsEmojiFrown className={classes.buttonIcon} /> I don't know
-                  it
+                  <BsEmojiFrown className={classes.buttonIcon} /> I don't know it
                 </button>
               </article>
             </div>
-          )}
+          ))}
         </section>
         <section className={classes.aside}>
           <AiFillCaretUp className={classes.fillCarteUp} />
@@ -204,7 +201,7 @@ const Details = (props) => {
                   <span className={classes.circleIcon}>
                     <FiEdit
                       onClick={(event) =>
-                        handlerEditCard(event, answer, question)
+                        handlerEditCard(event, id, answer, question)
                       }
                       className={classes.iconPosition}
                     />
@@ -213,7 +210,7 @@ const Details = (props) => {
                     <GoTrashcan className={classes.iconPosition} />
                   </span>
                 </div>
-                <h5>HH</h5>
+                <h5>{question}</h5>
               </article>
             );
           })}

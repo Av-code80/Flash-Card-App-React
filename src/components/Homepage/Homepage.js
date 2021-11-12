@@ -20,9 +20,8 @@ const Homepage = () => {
   // const nameInputRef = useRef();
 
   const handlerChangeName = (index) => {
-    setCurrentInput(index);
+    setCurrentInput(index); 
   };
-
   const nameInputChangeHandler = (event) => setEnteredName(event.target.value);
 
   useEffect(() => {
