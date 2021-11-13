@@ -59,6 +59,7 @@ const Details = (props) => {
       setEditCardStatus(true);
       setQuestionInput(currentQuestion);
       setAnswerInput(currentAnswer);
+      setCurrentCard(-1)
      console.log(currentId, currentAnswer, currentQuestion);
     }
 
@@ -72,27 +73,32 @@ const Details = (props) => {
         setCurrentCard(card)
       }, [category, currentCardID])
 
-      const handlerOnSubmitCard = (event) => {
-        console.log("submit");
-        event.preventDefault()
+    const handlerOnSubmitCard = (event) => {
+         event.preventDefault();
+        const categories = {...dataStorageToObject()}
+        let cards = [...categories[id]["cards"]]
+        cards = _.mapKeys(cards, "id")
+        cards[currentCardID]["question"] = questionInput
+        cards[currentCardID]["answer"] = answerInput
+        categories[id]["cards"] = Object.values(cards)
+        localStorage.setItem("categories", JSON.stringify(Object.values(categories)))
+        handlerShowCard(currentCardID)
+        setCategory(categories[id])
       }
 
-    // const handlerOnSubmitCard = (event) => {
-    //   event.preventDefault();
-    //   const categories = { ...dataStorageToObject() };
-    //   let cards = [...categories[id]["cards"]];
-    //   cards = _.mapKeys(cards, "id");
-    //   cards[currentCardID]["question"] = questionInput;
-    //   cards[currentCardID]["answer"] = answerInput;
-    //   categories[id]["cards"] = Object.values(cards);
-
-    //   localStorage.setItem(
-    //     "categories",
-    //     JSON.stringify(Object.values(categories))
-    //   );
-    //   setCategory(categories[id]);
-    //   handlerShowCard(currentCardID);
-    // };
+      const handlerRemoveCard = (event, currentId) => {
+        event.stopPropagation()
+       setEditCardStatus(false)
+        setCurrentCardID(currentId)
+       const categories = dataStorageToObject()
+       let cards = categories[id]["cards"]
+       cards = _.mapKeys(categories[id]["cards"], "id")
+       cards = _.omit(cards, [currentId])
+       categories[id]["cards"] = Object.values(cards)
+       localStorage.setItem("categories", JSON.stringify(Object.values(categories)))
+          setCategory(categories[id])
+          setCurrentCardID(-1)
+      }
 
   if (!category.hasOwnProperty("name")) {
     return <div className={classes.categoryHasOwnProperty}>Loading...</div>;
@@ -141,7 +147,7 @@ const Details = (props) => {
             currentCard && (
             <div>
               <h1>Practice Time !</h1>
-              <h3>hh</h3>
+              <h3>{category.name}</h3>
               <article>
                 <div className={classes.slide}>
                   <div className={classes.slideScript}>
@@ -207,7 +213,7 @@ const Details = (props) => {
                     />
                   </span>
                   <span className={classes.circleIcon}>
-                    <GoTrashcan className={classes.iconPosition} />
+                    <GoTrashcan onClick={(event) => handlerRemoveCard(event, id)} className={classes.iconPosition} />
                   </span>
                 </div>
                 <h5>{question}</h5>
