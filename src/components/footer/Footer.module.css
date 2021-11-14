@@ -1,6 +1,8 @@
 .footerButton{
-  background-color:rgba(24, 40, 3, 0.92);
-  color: #ffffff;
+  background: #bdc3c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: rgb(19, 18, 18);
   padding: 2em;
   text-align: center;
   font-size: .7em;

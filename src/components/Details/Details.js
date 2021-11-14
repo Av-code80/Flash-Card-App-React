@@ -31,7 +31,7 @@ const Details = (props) => {
 
   useEffect(() => {
     const categoryDetails = dataStorageToObject();
-    setCategory(categoryDetails[id]);
+    setCategory(categoryDetails[id]); 
   }, [id]);
 
   const handlerAddCard = () => {
@@ -59,8 +59,7 @@ const Details = (props) => {
       setEditCardStatus(true);
       setQuestionInput(currentQuestion);
       setAnswerInput(currentAnswer);
-      setCurrentCard(-1)
-     console.log(currentId, currentAnswer, currentQuestion);
+     //console.log(currentId, currentAnswer, currentQuestion, '***');
     }
 
   const handlerShowCard = (showId) => {
@@ -69,8 +68,9 @@ const Details = (props) => {
   };
 
       useEffect(() => {
-        const card = _.mapKeys(category["cards"], "id")[currentCardID]
-        setCurrentCard(card)
+        const card = _.mapKeys(category["cards"], "id")[currentCardID];
+        console.log(_.mapKeys(category["cards"], "id")[currentCardID]);
+        setCurrentCard(card);
       }, [category, currentCardID])
 
     const handlerOnSubmitCard = (event) => {
@@ -103,7 +103,7 @@ const Details = (props) => {
   if (!category.hasOwnProperty("name")) {
     return <div className={classes.categoryHasOwnProperty}>Loading...</div>;
   }
-  console.log(Object.hasOwnProperty(category, "name")); // writable
+  //console.log(Object.hasOwnProperty(category, "name")); // writable
 
   return (
     <>
