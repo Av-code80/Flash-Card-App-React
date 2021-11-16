@@ -1,23 +1,18 @@
 import { Route, Switch } from "react-router";
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import Auth from "./components/Auth/Auth";
 import HeaderLogout from "./components/Header/HeaderLogout";
 import Homepage from "./components/Homepage/Homepage";
 import Details from "./components/Details/Details";
-import Footer from '../src/components/footer/Footer'
+import Footer from "../src/components/footer/Footer";
 import "./App.css";
 
-
-function App() {
-
+const App = () => {
   useEffect(() => {
     if (!localStorage.getItem("categories")) {
-
-     localStorage.setItem("categories", "[]");
-    } 
+      localStorage.setItem("categories", "[]");
+    }
   }, []);
-
-
   return (
     <>
       <HeaderLogout />
@@ -29,6 +24,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;
