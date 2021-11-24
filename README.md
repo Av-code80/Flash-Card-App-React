@@ -1,4 +1,4 @@
-# Ce projet est un projet d'essai de "Flash Card" en local Storage. Afin d'avoir acces au dernière version du projet de production de "Flash Card et de profiter de ses fonctionalutés multiples, vous pouvez contacter à cette adress mail : dev.avehghasemian@gmail.com.
+# Ce projet est un projet d'essai de "Flash Card" en local Storage. Afin d'avoir acces au dernière version du projet de production de Flash Card "lordofcards" et de profiter de ses fonctionalutés multiples, vous pouvez contacter à cette adress mail : dev.avehghasemian@gmail.com.
 
 # Ce Projet de Production de FLASH CARD est basé en technology de React={localStorage, API, CSS}.
 
