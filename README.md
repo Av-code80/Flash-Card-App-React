@@ -1,6 +1,6 @@
-# Ce projet est un projet d'essai de "Flash Card" en local Storage. Afin d'avoir acces au dernière version du projet de production de Flash Card "lordofcards" et de profiter de ses fonctionalutés multiples, vous pouvez contacter à cette adress mail : dev.avehghasemian@gmail.com.
+# Ce projet est un projet d'essai d'un projet final appellant "Flash Card" basé en technologie comme "local Storage". Afin d'avoir acces à la dernière version du projet de production de Flash Card "lordofcards" et de profiter de ses fonctionalités multiples, vous pouvez consulter ce lien : http://lordofcards.com/ ou contacter à cette adress mail : dev.avehghasemian@gmail.com.
 
-# Ce Projet de Production de FLASH CARD est basé en technology de React={localStorage, API, CSS}.
+# Ce Projet de Production de FLASH CARD est basé en technologies telque : React={localStorage, API, CSS}.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
