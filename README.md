@@ -1,4 +1,4 @@
-# Ce projet est un projet d'essai d'un projet final appellant "Flash Card" basé en technologie comme "local Storage". Afin d'avoir acces à la dernière version du projet de production de Flash Card "lordofcards" et de profiter de ses fonctionalités multiples, vous pouvez consulter ce lien : http://lordofcards.com/ ou contacter à cette adress mail : dev.avehghasemian@gmail.com.
+# Ce projet est un projet d'essai(basé en "local Storage")d'un projet de production final appellant "Flash Card" basé en technologies tel que : React.js, Mantine, Python Django etc. Afin d'avoir acces à la dernière version du projet de production de Flash Card "lordofcards" et de profiter de ses fonctionalités multiples, vous pouvez consulter ce lien : http://lordofcards.com/ ou contacter à cette adress mail : dev.avehghasemian@gmail.com.
 
 # Ce Projet de Production de FLASH CARD est basé en technologies telque : React={localStorage, API, CSS}.
 
